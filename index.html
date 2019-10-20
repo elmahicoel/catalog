@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #btn {
+            border: none;
+            background-color: green;
+            
+            
+            cursor: pointer;
+            display: inline-block;
+}
+        #background {
+            background-color: green;
+        }
+        .intro {
+            border: 1px solid black;
+            width: 600px;
+            height: 20px;
+            margin: 10px;
+            display: flex;
+            flex-direction: row;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .main {
+            border: 1px solid black;
+            width: 600px;
+            height: auto;
+            margin: 10px;
+
+        }
+        .info {
+            display: flex;
+            flex-direction: row;
+        }
+        .child-1,
+        .child-3 {
+            min-width: 32%;
+        }
+        .child-2 {
+            min-width: 36%;
+        }
+        ul {
+            text-align: center;
+            list-style-type: none;
+            padding: 2px;
+            margin: 0;
+            font-size: 22px;
+        }
+        child-21{
+            text-align : center;
+        }
+    </style>
+</head>
+
+<body id="background">
+    <h1>Lista elevi</h1>
+    <div class="intro">
+        Nume:<input type="text" id="elev">
+        <button id="adaugaElev" onclick="studentName()">Adauga Elev</button>
+    </div>
+    <div class="main">
+        <div>
+            <button id = "btn" onclick="ascSort()"><h4>Sorteaza ascendent dupa medie note</h4></button>
+            <h4>Sorteaza descendent dupa medie note</h4>
+        </div>
+        <div class="info">
+            <div class="child-1">
+                <ul id="nume"><strong>Nume</strong></ul>
+            </div>
+            <div class="child-2">
+                <ul id="medie"><Strong>Medie Note</Strong></ul>
+            </div>
+            <div class="child-3">
+                <ul id="notes">&nbsp</ul>
+            </div>
+        </div>
+
+
+    </div>
+    <div id="sol"><h1>Note elev:</h1></div>
+    <div class="intro">
+        Nota:<input type="text" id="nota">
+        <button id="adaugaNota" onclick="studentGrades()">Adauga Nota</button>
+    </div>
+    <div class="main">
+            <div>
+                   <div> <button id = "btn" onclick="ascSort()"><h4>Sorteaza ascendent notele</h4></button> </div>
+                   <div> <button id = "btn" onclick="desSort()"><h4>Sorteaza descendent notele</h4></button> </div>
+                </div>
+                <div >
+                    
+                    <div class="child-21">
+                        <ul id="note"><Strong>Nota</Strong></ul>
+                    </div>
+                    
+                </div>
+
+    </div>
+
+
+
+    <script>
+        var numeElev = document.getElementById("elev");
+        numeElev.addEventListener("keypress", function (event) {
+            if (event.keyCode === 13) {
+                document.getElementById("adaugaElev").click()
+            }
+        }
+        )
+        function studentName() {
+            var ggg = []
+            
+            
+            var inputValue = document.getElementById('elev').value;
+            var listOneNode = document.getElementById('nume');
+            var liOneNode = document.createElement("LI");
+            var txtNode = document.createTextNode(inputValue);
+            
+            var listThreeNode = document.getElementById('notes')
+            var liThreeNode = document.createElement("LI")
+            var butNode = document.createElement("button");
+            butNode.innerHTML = "Vezi notele"
+            liThreeNode.appendChild(butNode);
+            listThreeNode.appendChild(liThreeNode);
+            liOneNode.appendChild(txtNode);
+            listOneNode.appendChild(liOneNode);
+            document.getElementById("elev").value = "";
+            butNode.addEventListener("click", function buttonClick(){
+                ggg.push(inputValue);
+                document.getElementById("sol").innerHTML =`<div><h1>Note elev:${inputValue}</h1><div>`
+                var lis = document.querySelectorAll('#note li');
+                for(var i=0; li=lis[i]; i++) {
+                    li.parentNode.removeChild(li);
+                }
+                        
+            })
+            
+            
+        }
+        function studentGrades(){
+            var inputNotaValue = document.getElementById('nota').value;
+            var listFourNode = document.getElementById('note');
+            var liFourNode = document.createElement("LI");
+            var txtFourNode = document.createTextNode(inputNotaValue);
+            liFourNode.appendChild(txtFourNode);
+            document.getElementById("nota").value = "";
+            listFourNode.appendChild(liFourNode);  
+            var med = 0; 
+            var medFinal = 0;
+            var num = listFourNode.getElementsByTagName("LI");
+            
+            for (var i=0 ; i<num.length ; i++) {
+                
+                
+                med += parseInt(num[i].innerHTML);
+                medFinal = med/ num.length;
+            console.log(med)
+            console.log(medFinal)
+            }
+            
+            
+            
+            
+            var lis = document.querySelectorAll('#medie li');
+            var listaNume = document.getElementById("nume");
+            
+            for(var i=0; li=lis[i]; i++) {
+                
+
+            li.parentNode.removeChild(li);
+            }
+
+            var listTwoNode = document.getElementById('medie');
+            var liTwoNode = document.createElement ("LI");
+            for(var j=0 ; j<=lis.length; j++){
+                var ele = document.getElementById('sol');
+                console.log('ele');
+                
+            }
+            
+            var txtTwoNode = document.createTextNode(medFinal);
+            
+            liTwoNode.appendChild(txtTwoNode);
+            listTwoNode.appendChild(liTwoNode);
+         
+        }
+        
+        function ascSort(){
+        var switching = true;
+        var shouldSwitch;
+        var list = document.getElementById('note');
+
+        while (switching) {
+            switching = false ;
+            var nume = list.getElementsByTagName("LI");
+            for (var i = 0; i < nume.length; i++) {
+							if (parseInt(nume[i].innerHTML) > parseInt(nume[i + 1].innerHTML)) {
+								shouldSwitch = true;
+								break;
+						}
+					}
+
+            if(shouldSwitch){
+                nume[i].parentNode.insertBefore(nume[i+1],nume[i]);
+                switching = true;
+            }
+        }
+        
+
+    }
+    function desSort(){
+        var switching = true;
+        var shouldSwitch;
+        var list = document.getElementById('note');
+
+        while (switching) {
+            switching = false ;
+            var nume = list.getElementsByTagName("LI");
+            for (var i = 0; i < nume.length; i++) {
+							if (parseInt(nume[i].innerHTML) < parseInt(nume[i + 1].innerHTML)) {
+								shouldSwitch = true;
+								break;
+						}
+					}
+
+            if(shouldSwitch){
+                nume[i].parentNode.insertBefore(nume[i+1],nume[i]);
+                switching = true;
+            }
+        }
+        
+
+    }
+      
+    
+    </script>
+
+</body>
+
+</html>
